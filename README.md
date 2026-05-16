@@ -51,16 +51,16 @@ pytest -q
 ## Suggested GitHub Upload Structure
 ```text
 .
-âââ app/
-âââ mock_robot_api/
-âââ tests/
-âââ .github/workflows/ci.yml
-âââ docker-compose.yml
-âââ Dockerfile
-âââ README.md
-âââ requirements.txt
-âââ requirements-dev.txt
-âââ run.py
+app
+mock_robot_api/
+tests/
+.github/workflows/ci.yml
+docker-compose.yml
+Dockerfile
+README.md
+requirements.txt
+requirements-dev.txt
+run.py
 ```
 
 ## Security Notes
