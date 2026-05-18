@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="auth-card">
+  <h2>Register</h2>
+  <form method="post" class="form-grid">
+    <label>Username
+      <input type="text" name="username" required>
+    </label>
+    <label>Email
+      <input type="email" name="email" required>
+    </label>
+    <label>Password
+      <input type="password" name="password" required>
+    </label>
+    <label>Role
+      <select name="role">
+        <option value="viewer">Viewer</option>
+        <option value="commander">Commander</option>
+      </select>
+    </label>
+    <button class="btn" type="submit">Create Account</button>
+  </form>
+  <p>Already registered? <a href="{{ url_for('auth.login') }}">Login</a></p>
+</section>
+{% endblock %}

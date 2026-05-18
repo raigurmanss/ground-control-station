@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="dashboard-layout">
+  <div class="status-panel card">
+    <h2>Robot Status</h2>
+    <div class="status-row"><span>Connection</span><strong id="connectionBadge" class="status-badge unknown">Unknown</strong></div>
+    <div class="status-row"><span>Battery</span><strong id="batteryValue">--</strong></div>
+    <div class="status-row"><span>State</span><strong id="robotStatus">--</strong></div>
+    <div class="status-row"><span>Position</span><strong id="positionValue">(0, 0)</strong></div>
+    <div id="alertBox" class="alert hidden"></div>
+  </div>
+
+  <div class="grid-panel card">
+    <h2>2D Grid</h2>
+    <div id="grid" class="grid"></div>
+    <p class="small-text">Blue square = robot. Grid origin shown at bottom-left convention in UI labels.</p>
+  </div>
+
+  <div class="control-panel card">
+    <h2>Mission Controls</h2>
+    <div class="control-pad">
+      <button class="btn move-btn" data-direction="up" {% if not user.is_commander %}disabled{% endif %}>↑</button>
+      <div class="middle-row">
+        <button class="btn move-btn" data-direction="left" {% if not user.is_commander %}disabled{% endif %}>←</button>
+        <button class="btn move-btn" data-direction="right" {% if not user.is_commander %}disabled{% endif %}>→</button>
+      </div>
+      <button class="btn move-btn" data-direction="down" {% if not user.is_commander %}disabled{% endif %}>↓</button>
+    </div>
+    {% if not user.is_commander %}
+      <p class="warning-text">Viewer role is read-only. Only Commanders can move the robot.</p>
+    {% endif %}
+    <p id="commandFeedback" class="small-text"></p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Recent Mission Log</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Timestamp</th><th>User</th><th>Event</th><th>Command</th><th>Success</th></tr>
+      </thead>
+      <tbody>
+      {% for log in recent_logs %}
+        <tr>
+          <td>{{ log.timestamp }}</td>
+          <td>{{ log.username }}</td>
+          <td>{{ log.event_type }}</td>
+          <td>{{ log.command or '-' }}</td>
+          <td>{{ 'Yes' if log.success else 'No' }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5">No mission logs yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+  window.dashboardConfig = {
+    lowBatteryThreshold: {{ low_battery_threshold }},
+    pollSeconds: {{ poll_seconds }},
+    isCommander: {{ 'true' if user.is_commander else 'false' }}
+  };
+</script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
