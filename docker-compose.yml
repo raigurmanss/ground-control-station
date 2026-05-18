@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  ground-control:
+    build: .
+    container_name: ground-control
+    ports:
+      - "5000:5000"
+    environment:
+      SECRET_KEY: change-this-in-production
+      DATABASE_URL: sqlite:////app/instance/ground_control.db
+      ROBOT_API_URL: http://robot-api:8001
+      ROBOT_TIMEOUT: 2
+      ROBOT_MAX_RETRIES: 3
+      TELEMETRY_POLL_SECONDS: 2
+      LOW_BATTERY_THRESHOLD: 20
+    volumes:
+      - ./instance:/app/instance
+    depends_on:
+      - robot-api
+
+  # Replace this service with the university-provided robot container when available.
+  robot-api:
+    build: ./mock_robot_api
+    container_name: robot-api
+    ports:
+      - "8001:8001"

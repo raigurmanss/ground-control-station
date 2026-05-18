@@ -1,4 +1,5 @@
 # Ground Control Station (Flask)
+
 A web-based Robot Management System that acts as a Ground Control Station for a remote autonomous unit. The application integrates with a robot REST API, visualises telemetry on a 2D dashboard, enforces role-based access control, logs mission activity, and handles intermittent connectivity gracefully.
 
 ## Features
@@ -51,16 +52,16 @@ pytest -q
 ## Suggested GitHub Upload Structure
 ```text
 .
-app
-mock_robot_api/
-tests/
-.github/workflows/ci.yml
-docker-compose.yml
-Dockerfile
-README.md
-requirements.txt
-requirements-dev.txt
-run.py
+├── app/
+├── mock_robot_api/
+├── tests/
+├── .github/workflows/ci.yml
+├── docker-compose.yml
+├── Dockerfile
+├── README.md
+├── requirements.txt
+├── requirements-dev.txt
+└── run.py
 ```
 
 ## Security Notes
